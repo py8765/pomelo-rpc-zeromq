@@ -28,6 +28,12 @@ var routeFunc = function(routeParam, msg, routeContext, cb) {
 
 var client = Client.create({routeContext: routeContext, router: routeFunc, context: context});
 
+// var sum = 10000
+var sum = 3
+  , retNum = 0
+  // , sendInterval = 1;
+  , sendInterval = 10;
+
 client.start(function(err) {
   console.log('rpc client start ok.');
 
@@ -35,10 +41,29 @@ client.start(function(err) {
   client.addServers(servers);
 
   var msg = 'Hello World';
-  client.proxies.user.test.service.echo(routeParam, msg, function(err, resp) {
-    if(err) {
-      console.error(err.stack);
-    }
-    console.log(resp);
-  });
+
+  var beginTime = Date.now();
+
+  var idx = setInterval(function() {
+    client.proxies.user.test.service.echo(routeParam, msg, function(err, resp) {
+      ++retNum;
+
+      if(err) {
+        console.error(err.stack);
+      }
+
+      var d = new Date();
+      var ts = '[' + d.toLocaleTimeString() + '.' + d.getMilliseconds() + '] ';
+      console.log('%s%d : resp = %s', ts, retNum, resp);
+
+      if(retNum >= sum) {
+        clearInterval(idx);
+        var endTime = Date.now();
+        console.log('========================');
+        console.log('cost time : %d', endTime - beginTime);
+        console.log('========================');
+      }
+    });
+  }, sendInterval);
 });
+
