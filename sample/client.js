@@ -29,10 +29,10 @@ var routeFunc = function(routeParam, msg, routeContext, cb) {
 var client = Client.create({routeContext: routeContext, router: routeFunc, context: context});
 
 // var sum = 10000
-var sum = 300
+var sum = 3
   , retNum = 0
   // , sendInterval = 1;
-  , sendInterval = 100;
+  , sendInterval = 10;
 
 client.start(function(err) {
   console.log('rpc client start ok.');
