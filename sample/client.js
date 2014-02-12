@@ -11,7 +11,7 @@ var context = {
 
 // server info list
 var servers = [
-  {id: 'test-server-1', serverType: 'test', host: '127.0.0.1', port: 3333}
+  {id: 'test-server-1', serverType: 'test', host: 'pomelo3.server.163.org', port: 3333}
 ];
 
 // route parameter passed to route function
@@ -33,7 +33,8 @@ client.start(function(err) {
   client.addProxies(records);
   client.addServers(servers);
 
-  client.proxies.user.test.service.echo(routeParam, 'hello', function(err, resp) {
+  var msg = 'Hello World';
+  client.proxies.user.test.service.echo(routeParam, msg, function(err, resp) {
     if(err) {
       console.error(err.stack);
     }

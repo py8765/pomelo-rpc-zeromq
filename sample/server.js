@@ -5,9 +5,11 @@ var paths = [
   {namespace: 'user', path: __dirname + '/remote/test'}
 ];
 
-var host = '127.0.0.1';
+var host = 'pomelo3.server.163.org';
 var port = 3333;
 
 var server = Server.create({paths: paths, port: port, host: host});
 server.start();
-console.log('rpc server started.');
+
+console.log('RPC server started (port:%d) ...', port);
+
